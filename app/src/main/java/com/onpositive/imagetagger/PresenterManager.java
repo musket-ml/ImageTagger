@@ -39,7 +39,7 @@ public class PresenterManager {
         return presenter;
     }
 
-    public void savePresenter(BasePresenter<?,?> presenter, Bundle outState){
+    public void savePresenter(BasePresenter<?, ?> presenter, Bundle outState) {
         long presenterId = currentId.incrementAndGet();
         presenters.put(presenterId, presenter);
         outState.putLong(SIS_KEY_PRESENTER_ID, presenterId);
