@@ -14,7 +14,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "boolean", "IS_LOGS_ENABLE", "false"
         }
+        debug {
+            buildConfigField "boolean", "IS_LOGS_ENABLE", "true"
+        }
+
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -24,6 +29,7 @@ android {
 
 dependencies {
     implementation 'com.jakewharton:butterknife:10.2.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
     implementation 'com.google.guava:guava:28.1-android'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
