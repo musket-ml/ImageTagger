@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">ImageTagger</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="close">Close</string>
+    <string name="done">Done</string>
 </resources>
