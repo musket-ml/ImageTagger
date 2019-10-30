@@ -35,6 +35,6 @@ public class Tag implements Comparable<Tag>{
 
     @Override
     public int compareTo(Tag tag) {
-        return this.getTagLabel().compareTo(tag.getTagLabel());
+        return this.getTagLabel().toLowerCase().compareTo(tag.getTagLabel().toLowerCase());
     }
 }
