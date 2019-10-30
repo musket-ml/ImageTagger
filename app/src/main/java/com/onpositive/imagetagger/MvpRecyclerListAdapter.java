@@ -20,14 +20,15 @@ public abstract class MvpRecyclerListAdapter<M extends Comparable<M>, P extends 
         for (M item : data) {
             addInternal(item);
         }
+        Collections.sort(models);
         notifyDataSetChanged();
     }
 
     public void addAll(Collection<M> data) {
-        Collections.sort((List<M>) data);
         for (M item : data) {
             addInternal(item);
         }
+        Collections.sort(models);
         int addedSize = data.size();
         int oldSize = models.size() - addedSize;
         notifyItemRangeInserted(oldSize, addedSize);
