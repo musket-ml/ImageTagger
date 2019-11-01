@@ -35,7 +35,9 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
     public FloatingActionButton makeTagFAB;
     @BindView(R.id.photo_iv)
     ImageView photoIV;
-    @BindView(R.id.close_btn)
+    @BindView(R.id.cancel_btn)
+    Button cancelBtn;
+    @BindView(R.id.save_close_btn)
     Button closeBtn;
     @BindView(R.id.tags_rv)
     RecyclerView tagsRV;
@@ -43,11 +45,16 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
 
     private ImageTaggerPresenter presenter;
 
-    @OnClick({R.id.close_btn, R.id.makeTagFAB})
+    @OnClick({R.id.cancel_btn, R.id.save_close_btn, R.id.makeTagFAB})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.close_btn:
+            case R.id.cancel_btn:
+                log.log("Cancel button clicked");
+                onBackPressed();
+                break;
+            case R.id.save_close_btn:
                 log.log("Close button clicked");
+                presenter.onSaveButtonClicked();
                 onBackPressed();
                 break;
             case R.id.makeTagFAB:
