@@ -9,6 +9,9 @@ import com.onpositive.imagetagger.models.Tag;
 import com.onpositive.imagetagger.presenters.TagPresenter;
 import com.onpositive.imagetagger.tools.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ImageTagsAdapter extends MvpRecyclerListAdapter<Tag, TagPresenter, ImageTagVH> {
     private static Logger log = new Logger(ImageTagsAdapter.class);
 
@@ -33,5 +36,18 @@ public class ImageTagsAdapter extends MvpRecyclerListAdapter<Tag, TagPresenter, 
     protected Object getModelId(@NonNull Tag model) {
         log.log("getModelId: " + model.getTagId());
         return model.getTagId();
+    }
+
+    @Override
+    public List<Tag> getSelectedItems() {
+        List<Tag> selectedItems = new ArrayList<>();
+        for (Tag tag : models) {
+            if (tag.isChecked()) {
+                selectedItems.add(tag);
+            }
+        }
+
+        log.log("SelectedItems count: " + selectedItems.size());
+        return selectedItems;
     }
 }

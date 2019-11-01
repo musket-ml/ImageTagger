@@ -118,6 +118,11 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
     }
 
     @Override
+    public List<Tag> getSelectedTags() {
+        return tagsRVAdapter.getSelectedItems();
+    }
+
+    @Override
     public void showNewTagDialog() {
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);

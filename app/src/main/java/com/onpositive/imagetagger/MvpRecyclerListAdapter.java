@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class MvpRecyclerListAdapter<M extends Comparable<M>, P extends BasePresenter, VH extends MvpViewHolder<P>> extends MvpRecyclerAdapter<M, P, VH> {
-    private final List<M> models;
+    protected final List<M> models;
 
     public MvpRecyclerListAdapter() {
         models = new ArrayList<>();
@@ -91,6 +91,8 @@ public abstract class MvpRecyclerListAdapter<M extends Comparable<M>, P extends 
     public int getItemCount() {
         return models.size();
     }
+
+    public abstract List<M> getSelectedItems();
 
     @Override
     protected M getItem(int position) {
