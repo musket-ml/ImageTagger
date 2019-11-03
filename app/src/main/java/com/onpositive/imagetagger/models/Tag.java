@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "tags")
+@Entity
 public class Tag implements Comparable<Tag>{
 
     @PrimaryKey(autoGenerate = true)
