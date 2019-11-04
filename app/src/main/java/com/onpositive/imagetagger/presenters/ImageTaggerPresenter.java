@@ -18,7 +18,8 @@ public class ImageTaggerPresenter extends BasePresenter<List<Tag>, ImageTaggerAc
         view().showNewTagDialog();
     }
 
-    public void onCreate() {
+    public void onCreate(String currentPhotoPath) {
+        view().showImage(currentPhotoPath);
         new LoadTagsTask().execute();
     }
 

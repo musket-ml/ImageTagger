@@ -76,11 +76,10 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
         }
         Intent intent = getIntent();
         String currentPhotoPath = intent.getStringExtra(ImagesGroupFragment.ARG_CURRENT_PHOTO_PATH);
-        photoIV.setImageBitmap(BitmapFactory.decodeFile(currentPhotoPath));
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         tagsRV.setLayoutManager(new LinearLayoutManager(this));
         tagsRV.setItemAnimator(itemAnimator);
-        presenter.onCreate();
+        presenter.onCreate(currentPhotoPath);
         log.log("onCreate executed.");
     }
 
@@ -103,6 +102,11 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
         super.onSaveInstanceState(outState);
 
         PresenterManager.getInstance().savePresenter(presenter, outState);
+    }
+
+    @Override
+    public void showImage(String imagePath) {
+        photoIV.setImageBitmap(BitmapFactory.decodeFile(imagePath));
     }
 
     @Override
