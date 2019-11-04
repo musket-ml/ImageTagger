@@ -10,10 +10,10 @@ import java.util.List;
 
 @Dao
 public interface TagDao {
-    @Query("SELECT * FROM tags ORDER BY tagLabel")
+    @Query("SELECT * FROM Tag ORDER BY tagLabel")
     List<Tag> getTags();
 
-    @Query("SELECT * FROM tags WHERE tagId = :tagId")
+    @Query("SELECT * FROM Tag WHERE tagId = :tagId")
     Tag getById(int tagId);
 
     @Insert
