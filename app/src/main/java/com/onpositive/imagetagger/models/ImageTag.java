@@ -1,5 +1,6 @@
 package com.onpositive.imagetagger.models;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 
@@ -14,7 +15,9 @@ import androidx.room.ForeignKey;
                         childColumns = "tagId")
         })
 public class ImageTag {
+    @NonNull
     private String imagePath;
+    @NonNull
     private int tagId;
 
     public String getImagePath() {
