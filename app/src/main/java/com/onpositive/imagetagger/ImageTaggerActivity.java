@@ -79,6 +79,7 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
         RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
         tagsRV.setLayoutManager(new LinearLayoutManager(this));
         tagsRV.setItemAnimator(itemAnimator);
+        presenter.bindView(this);
         presenter.onCreate(currentPhotoPath);
         log.log("onCreate executed.");
     }
@@ -118,6 +119,16 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
             log.log("Tags Recycler View loaded.");
         } catch (Exception e) {
             log.log("Failed tagsRV data loading: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void showTagsSelection(List<Tag> imageTagList) {
+        try{
+            tagsRVAdapter.setTagsSelection(imageTagList);
+            log.log("Image Tags are selected. Count: " + imageTagList.size());
+        }catch (Exception e){
+            log.log("Failed tagsRV show selected tags: " + e.getMessage());
         }
     }
 

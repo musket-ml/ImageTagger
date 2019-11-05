@@ -12,4 +12,6 @@ public interface ImageTaggerView {
     void showNewTagDialog();
 
     List<Tag> getSelectedTags();
+
+    void showTagsSelection(List<Tag> imageTagList);
 }
