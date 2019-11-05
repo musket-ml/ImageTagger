@@ -1,16 +1,24 @@
 package com.onpositive.imagetagger.models;
 
-import java.util.Set;
+import java.util.List;
 
 public class TaggedImage {
-    private String imagePath;
-    private Set<String> imageTags;
+    Image image;
+    List<Tag> imageTagList;
 
-    public String getImagePath() {
-        return imagePath;
+    public Image getImage() {
+        return image;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public List<Tag> getImageTagList() {
+        return imageTagList;
+    }
+
+    public void setImageTagList(List<Tag> imageTagList) {
+        this.imageTagList = imageTagList;
     }
 }
