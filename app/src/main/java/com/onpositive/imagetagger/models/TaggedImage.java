@@ -2,7 +2,7 @@ package com.onpositive.imagetagger.models;
 
 import java.util.List;
 
-public class TaggedImage {
+public class TaggedImage implements Comparable<TaggedImage>{
     Image image;
     List<Tag> imageTagList;
 
@@ -20,5 +20,10 @@ public class TaggedImage {
 
     public void setImageTagList(List<Tag> imageTagList) {
         this.imageTagList = imageTagList;
+    }
+
+    @Override
+    public int compareTo(TaggedImage taggedImage) {
+        return this.getImage().getLastModified().compareTo(taggedImage.getImage().getLastModified());
     }
 }
