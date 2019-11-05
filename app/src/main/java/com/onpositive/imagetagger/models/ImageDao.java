@@ -11,10 +11,10 @@ import java.util.List;
 @Dao
 public interface ImageDao {
     @Query("SELECT * FROM image ORDER BY lastModified")
-    List<Tag> getTags();
+    List<Image> getImages();
 
     @Query("SELECT * FROM image WHERE imagePath = :imagePath")
-    Tag getById(String imagePath);
+    Image getByPath(String imagePath);
 
     @Insert
     void insert(Image image);
