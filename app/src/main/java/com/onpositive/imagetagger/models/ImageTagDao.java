@@ -28,4 +28,7 @@ public interface ImageTagDao {
 
     @Delete
     void delete(ImageTag imageTag);
+
+    @Query("DELETE FROM image_tag_join WHERE image_tag_join.imagePath = :imagePath")
+    void deleteTagsForImage(final String imagePath);
 }

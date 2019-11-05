@@ -10,7 +10,7 @@ import com.onpositive.imagetagger.models.ImageTagDao;
 import com.onpositive.imagetagger.models.Tag;
 import com.onpositive.imagetagger.models.TagDao;
 
-@Database(entities = {Tag.class, Image.class, ImageTag.class}, version = 3)
+@Database(entities = {Tag.class, Image.class, ImageTag.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract TagDao tagDao();
 
