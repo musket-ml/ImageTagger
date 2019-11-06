@@ -5,6 +5,7 @@ import java.util.List;
 public class TaggedImage implements Comparable<TaggedImage> {
     Image image;
     List<Tag> imageTagList;
+    private boolean isChecked = false;
 
     public Image getImage() {
         return image;
@@ -29,5 +30,13 @@ public class TaggedImage implements Comparable<TaggedImage> {
     @Override
     public int compareTo(TaggedImage taggedImage) {
         return this.getImage().getLastModified().compareTo(taggedImage.getImage().getLastModified());
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }
