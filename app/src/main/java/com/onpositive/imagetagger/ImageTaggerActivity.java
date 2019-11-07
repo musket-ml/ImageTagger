@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.InputType;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,7 +23,11 @@ import com.onpositive.imagetagger.presenters.ImageTaggerPresenter;
 import com.onpositive.imagetagger.tools.Logger;
 import com.onpositive.imagetagger.views.ImageTaggerView;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -124,10 +129,10 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
 
     @Override
     public void showTagsSelection(List<Tag> imageTagList) {
-        try{
+        try {
             tagsRVAdapter.setTagsSelection(imageTagList);
             log.log("Image Tags are selected. Count: " + imageTagList.size());
-        }catch (Exception e){
+        } catch (Exception e) {
             log.log("Failed tagsRV show selected tags: " + e.getMessage());
         }
     }
@@ -135,6 +140,25 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
     @Override
     public List<Tag> getSelectedTags() {
         return tagsRVAdapter.getSelectedItems();
+    }
+
+    public File createImageFile() {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = this.getApplicationContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = null;
+        try {
+            image = File.createTempFile(
+                    imageFileName,
+                    ".jpg",
+                    storageDir
+            );
+        } catch (Exception e) {
+            log.log("Failed empty image file creation.\n" + e.getMessage());
+            e.printStackTrace();
+        }
+        log.log("Empty image file created");
+        return image;
     }
 
     @Override

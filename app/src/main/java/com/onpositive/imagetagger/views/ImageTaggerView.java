@@ -2,6 +2,7 @@ package com.onpositive.imagetagger.views;
 
 import com.onpositive.imagetagger.models.Tag;
 
+import java.io.File;
 import java.util.List;
 
 public interface ImageTaggerView {
@@ -14,4 +15,6 @@ public interface ImageTaggerView {
     List<Tag> getSelectedTags();
 
     void showTagsSelection(List<Tag> imageTagList);
+
+    File createImageFile();
 }
