@@ -1,5 +1,8 @@
 package com.onpositive.imagetagger.presenters;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 
 import com.onpositive.imagetagger.ImageTaggerActivity;
@@ -10,6 +13,10 @@ import com.onpositive.imagetagger.models.Tag;
 import com.onpositive.imagetagger.models.TaggedImage;
 import com.onpositive.imagetagger.tools.Logger;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.Date;
 import java.util.List;
 
 public class ImageTaggerPresenter extends BasePresenter<TaggedImage, ImageTaggerActivity> {
@@ -41,6 +48,24 @@ public class ImageTaggerPresenter extends BasePresenter<TaggedImage, ImageTagger
         model.setImageTagList(selectedTags);
         new SaveTaggedImage().execute();
         log.log("onSaveButtonClicked() executed.");
+    }
+
+    private String createThumbnail(String imagePath) {
+        String thumbnailPath = null;
+        try {
+            Bitmap preview = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(imagePath), 320, 320);
+            File thumbnailFile = view().createImageFile();
+            OutputStream out = new FileOutputStream(thumbnailFile);
+            preview.compress(Bitmap.CompressFormat.JPEG, 50, out);
+            out.flush();
+            out.close();
+            thumbnailPath = thumbnailFile.getAbsolutePath();
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.log("Failed thumbnail creation.\n" + e.getMessage());
+        }
+        log.log("Thumbnail created.");
+        return thumbnailPath;
     }
 
     private class LoadTagsTask extends AsyncTask<Void, Void, List<Tag>> {
@@ -84,6 +109,10 @@ public class ImageTaggerPresenter extends BasePresenter<TaggedImage, ImageTagger
         @Override
         protected Void doInBackground(Void... voids) {
             if (null == ImageTaggerApp.getInstance().getDatabase().imageDao().getByPath(model.getImage().getImagePath())) {
+                Date lastModified = new Date(new File(model.getImage().getImagePath()).lastModified());
+                model.getImage().setLastModified(lastModified);
+                String thumbnailPath = createThumbnail(model.getImage().getImagePath());
+                model.getImage().setThumbnailPath(thumbnailPath);
                 ImageTaggerApp.getInstance().getDatabase().imageDao().insert(model.getImage());
                 log.log("Created new image: " + model.getImage().getImagePath());
             } else {
@@ -105,5 +134,4 @@ public class ImageTaggerPresenter extends BasePresenter<TaggedImage, ImageTagger
             return null;
         }
     }
-
 }

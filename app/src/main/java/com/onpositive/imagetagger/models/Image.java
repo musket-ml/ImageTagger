@@ -16,6 +16,7 @@ public class Image {
     @PrimaryKey
     private String imagePath;
     private Date lastModified;
+    private String thumbnailPath;
 
     public String getImagePath() {
         return imagePath;
@@ -31,5 +32,13 @@ public class Image {
 
     public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
+    }
+
+    public String getThumbnailPath() {
+        return thumbnailPath;
+    }
+
+    public void setThumbnailPath(String thumbnailPath) {
+        this.thumbnailPath = thumbnailPath;
     }
 }
