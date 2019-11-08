@@ -29,7 +29,7 @@ public class TaggedImage implements Comparable<TaggedImage> {
 
     @Override
     public int compareTo(TaggedImage taggedImage) {
-        return this.getImage().getLastModified().compareTo(taggedImage.getImage().getLastModified());
+        return taggedImage.getImage().getLastModified().compareTo(this.getImage().getLastModified());
     }
 
     public boolean isChecked() {
