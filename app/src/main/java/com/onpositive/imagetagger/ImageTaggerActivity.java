@@ -2,7 +2,7 @@ package com.onpositive.imagetagger;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.InputType;
@@ -21,6 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.onpositive.imagetagger.models.Tag;
 import com.onpositive.imagetagger.presenters.ImageTaggerPresenter;
 import com.onpositive.imagetagger.tools.Logger;
+import com.onpositive.imagetagger.tools.Utils;
 import com.onpositive.imagetagger.views.ImageTaggerView;
 
 import java.io.File;
@@ -112,7 +113,8 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
 
     @Override
     public void showImage(String imagePath) {
-        photoIV.setImageBitmap(BitmapFactory.decodeFile(imagePath));
+        Bitmap image = Utils.decodeSampledBitmapFromFile(imagePath, 700, 700);
+        photoIV.setImageBitmap(image);
     }
 
     @Override

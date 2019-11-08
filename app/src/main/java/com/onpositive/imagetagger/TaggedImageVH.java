@@ -45,7 +45,12 @@ class TaggedImageVH extends MvpViewHolder<TaggedImagePresenter> implements Tagge
                 tagsStringBuilder.append("; ");
             }
         }
-        imagePreviewIV.setImageBitmap(BitmapFactory.decodeFile(taggedImage.getImage().getImagePath()));
+        try {
+            Bitmap thumbnailImage = Utils.decodeSampledBitmapFromFile(taggedImage.getImage().getImagePath(), 320, 320);
+            imagePreviewIV.setImageBitmap(thumbnailImage);
+        } catch (Error err) {
+            log.log("Error. Failed card preview loading" + err.getMessage());
+        }
         Format formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = formatter.format(taggedImage.getImage().getLastModified());
         lastModifiedTV.setText(date);
