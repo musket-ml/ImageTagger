@@ -194,4 +194,16 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         dialog.show();
     }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        int currentTagId = item.getIntent().getIntExtra(ImageTagVH.TAG_ID, 0);
+        if (getApplicationContext().getResources().getString(R.string.edit).equals(item.getTitle())) {
+            presenter.onEditTagSelected(currentTagId);
+        } else if (getApplicationContext().getResources().getString(R.string.delete).equals(item.getTitle())) {
+            presenter.onDeleteTagSelected(currentTagId);
+        }
+
+        return super.onContextItemSelected(item);
+    }
 }

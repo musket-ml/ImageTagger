@@ -11,12 +11,24 @@ public class TagPresenter extends BasePresenter<Tag, TagView> {
         setSelection();
     }
 
-    public void setSelection(){
+    public void setSelection() {
         view().setSelection(model.isChecked());
     }
 
     @Override
     protected void updateView() {
         view().setTagLabel(model.getTagLabel());
+    }
+
+    public void onLongClick() {
+        view().showContextMenu();
+    }
+
+    public String onCreateContextMenuTitle() {
+        return model.getTagLabel();
+    }
+
+    public int onCreateContextMenuTagId() {
+        return model.getTagId();
     }
 }

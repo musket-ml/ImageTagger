@@ -17,4 +17,6 @@ public interface ImageTaggerView {
     void showTagsSelection(List<Tag> imageTagList);
 
     File createImageFile();
+
+    void removeTag(Tag tag);
 }
