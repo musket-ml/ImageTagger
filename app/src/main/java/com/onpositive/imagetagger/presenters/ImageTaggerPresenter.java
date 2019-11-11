@@ -19,7 +19,7 @@ import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
 
-public class ImageTaggerPresenter extends BasePresenter<TaggedImage, ImageTaggerActivity> {
+public class ImageTaggerPresenter extends BasePresenter<TaggedImage, ImageTaggerView> {
     private static Logger log = new Logger(ImageTaggerPresenter.class);
 
     @Override
