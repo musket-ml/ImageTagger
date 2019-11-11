@@ -1,12 +1,13 @@
 package com.onpositive.imagetagger.models;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity
-public class Tag implements Comparable<Tag>{
+public class Tag implements Comparable<Tag> {
 
     @PrimaryKey(autoGenerate = true)
     private int tagId;
@@ -47,5 +48,29 @@ public class Tag implements Comparable<Tag>{
 
     public void setChecked(boolean checked) {
         isChecked = checked;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + tagId;
+        return result;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Tag otherTag = (Tag) obj;
+        if (tagId != otherTag.tagId)
+            return false;
+        if (!tagLabel.equals(otherTag.tagLabel))
+            return false;
+        return true;
     }
 }
