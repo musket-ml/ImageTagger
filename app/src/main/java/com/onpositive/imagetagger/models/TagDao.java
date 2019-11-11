@@ -24,4 +24,7 @@ public interface TagDao {
 
     @Delete
     void delete(Tag tag);
+
+    @Query("DELETE FROM Tag WHERE Tag.tagId = :tagId")
+    void deleteTagById(Integer tagId);
 }

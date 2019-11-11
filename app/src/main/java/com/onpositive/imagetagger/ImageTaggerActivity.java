@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.text.InputType;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -142,6 +143,11 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
     @Override
     public List<Tag> getSelectedTags() {
         return tagsRVAdapter.getSelectedItems();
+    }
+
+    @Override
+    public void removeTag(Tag tag) {
+        tagsRVAdapter.removeItem(tag);
     }
 
     public File createImageFile() {

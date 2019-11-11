@@ -31,4 +31,7 @@ public interface ImageTagDao {
 
     @Query("DELETE FROM image_tag_join WHERE image_tag_join.imagePath = :imagePath")
     void deleteTagsForImage(final String imagePath);
+
+    @Query("DELETE FROM image_tag_join WHERE image_tag_join.tagId = :tagId")
+    void deleteTagById(final int tagId);
 }

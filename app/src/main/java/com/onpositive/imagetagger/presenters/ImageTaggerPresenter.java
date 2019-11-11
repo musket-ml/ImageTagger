@@ -5,13 +5,13 @@ import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.os.AsyncTask;
 
-import com.onpositive.imagetagger.ImageTaggerActivity;
 import com.onpositive.imagetagger.data.ImageTaggerApp;
 import com.onpositive.imagetagger.models.Image;
 import com.onpositive.imagetagger.models.ImageTag;
 import com.onpositive.imagetagger.models.Tag;
 import com.onpositive.imagetagger.models.TaggedImage;
 import com.onpositive.imagetagger.tools.Logger;
+import com.onpositive.imagetagger.views.ImageTaggerView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -61,11 +61,16 @@ public class ImageTaggerPresenter extends BasePresenter<TaggedImage, ImageTagger
             out.close();
             thumbnailPath = thumbnailFile.getAbsolutePath();
         } catch (Exception e) {
-            e.printStackTrace();
             log.log("Failed thumbnail creation.\n" + e.getMessage());
+        } catch (Error err) {
+            log.log("Error. Failed thumbnail creation.\n" + err.getMessage());
         }
         log.log("Thumbnail created.");
         return thumbnailPath;
+    }
+
+    public void onDeleteTagSelected(int tagId) {
+        new DeleteTag().execute(tagId);
     }
 
     private class LoadTagsTask extends AsyncTask<Void, Void, List<Tag>> {
@@ -132,6 +137,23 @@ public class ImageTaggerPresenter extends BasePresenter<TaggedImage, ImageTagger
                 }
             }
             return null;
+        }
+    }
+
+    private class DeleteTag extends AsyncTask<Integer, Void, Tag> {
+        @Override
+        protected Tag doInBackground(Integer... tagsIds) {
+            Tag deletedTag = ImageTaggerApp.getInstance().getDatabase().tagDao().getById(tagsIds[0]);
+            ImageTaggerApp.getInstance().getDatabase().imageTagDao().deleteTagById(tagsIds[0]);
+            ImageTaggerApp.getInstance().getDatabase().tagDao().deleteTagById(tagsIds[0]);
+            return deletedTag;
+        }
+
+        @Override
+        protected void onPostExecute(Tag tag) {
+            super.onPostExecute(tag);
+            view().removeTag(tag);
+            log.log("DeleteTag onPostExecute");
         }
     }
 }
