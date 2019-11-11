@@ -59,12 +59,10 @@ public abstract class MvpRecyclerListAdapter<M extends Comparable<M>, P extends 
 
     public void removeItem(M item) {
         int position = getItemPosition(item);
-        if (position > 0) {
+        if (position >= 0) {
             models.remove(item);
-        }
-        presenters.remove(getModelId(item));
-        if (position > 0) {
-            notifyItemRemoved(position); //TODO move this line to the first condition and test it.
+            notifyItemRemoved(position);
+            presenters.remove(getModelId(item));
         }
     }
 
