@@ -150,6 +150,40 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
         tagsRVAdapter.removeItem(tag);
     }
 
+    @Override
+    public void updateTag(Tag tag) {
+        tagsRVAdapter.updateItem(tag);
+    }
+
+    @Override
+    public void showEditDialogForTag(Tag tag) {
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setText(tag.getTagLabel());
+        input.selectAll();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                .setTitle(getResources().getString(R.string.edit_tag_dialog_title))
+                .setView(input)
+                .setPositiveButton(
+                        getResources().getText(R.string.apply),
+                        (dialog, which) -> {
+                            String tagLabel = input.getText().toString();
+                            tag.setTagLabel(tagLabel);
+                            presenter.onTagLabelEdited(tag);
+                            log.log("Add button clicked");
+                        })
+                .setNegativeButton(
+                        getResources().getText(R.string.cancel),
+                        (dialog, which) -> {
+                            log.log("Cancel button clicked");
+                        }
+                );
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        dialog.show();
+    }
+
     public File createImageFile() {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";

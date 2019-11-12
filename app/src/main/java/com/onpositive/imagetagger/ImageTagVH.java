@@ -18,6 +18,7 @@ import butterknife.OnLongClick;
 
 class ImageTagVH extends MvpViewHolder<TagPresenter> implements TagView, View.OnCreateContextMenuListener {
     public static final String TAG_ID = "tag_id";
+    public static final String ADAPTER_POSITION = "adapter_position";
     private static Logger log = new Logger(ImageTagVH.class);
     @BindView(R.id.tag_item_tv)
     TextView itemTV;
@@ -67,6 +68,7 @@ class ImageTagVH extends MvpViewHolder<TagPresenter> implements TagView, View.On
         int tagId = presenter.onCreateContextMenuTagId();
         Intent intent = new Intent();
         intent.putExtra(TAG_ID, tagId);
+        intent.putExtra(ADAPTER_POSITION, this.getAdapterPosition());
         contextMenu.setHeaderTitle(this.itemView.getContext().getResources().getString(R.string.tag_colon) + " " + tagLabel);
         contextMenu.add(0, view.getId(), 0, this.itemView.getContext().getResources().getString(R.string.edit)).setIntent(intent);
         contextMenu.add(0, view.getId(), 0, this.itemView.getContext().getResources().getString(R.string.delete)).setIntent(intent);

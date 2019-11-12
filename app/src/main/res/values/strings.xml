@@ -6,6 +6,8 @@
     <string name="add">Add</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
+    <string name="edit_tag_dialog_title" type="id">Edit tag</string>
     <string name="edit">Edit</string>
+    <string name="apply">Apply</string>
     <string name="tag_colon">Tag:</string>
 </resources>

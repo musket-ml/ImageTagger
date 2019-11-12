@@ -19,4 +19,8 @@ public interface ImageTaggerView {
     File createImageFile();
 
     void removeTag(Tag tag);
+
+    void updateTag(Tag tag);
+
+    void showEditDialogForTag(Tag tag);
 }

@@ -74,6 +74,14 @@ public class ImageTaggerPresenter extends BasePresenter<TaggedImage, ImageTagger
         new DeleteTag().execute(tagId);
     }
 
+    public void onEditTagSelected(Tag tag) {
+        view().showEditDialogForTag(tag);
+    }
+
+    public void onTagLabelEdited(Tag tag) {
+        new UpdateTag().execute(tag);
+    }
+
     private class LoadTagsTask extends AsyncTask<Void, Void, List<Tag>> {
 
         @Override
