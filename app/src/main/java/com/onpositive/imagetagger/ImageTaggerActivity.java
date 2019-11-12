@@ -197,9 +197,14 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        int currentTagId = item.getIntent().getIntExtra(ImageTagVH.TAG_ID, 0);
+        int currentTagId = item.getIntent().getIntExtra(ImageTagVH.TAG_ID, -1);
+        int adapterPosition = item.getIntent().getIntExtra(ImageTagVH.ADAPTER_POSITION, -1);
+        if (currentTagId < 0 || adapterPosition < 0) {
+            return super.onContextItemSelected(item);
+        }
         if (getApplicationContext().getResources().getString(R.string.edit).equals(item.getTitle())) {
-            presenter.onEditTagSelected(currentTagId);
+            Tag tag = tagsRVAdapter.getItem(adapterPosition);
+            presenter.onEditTagSelected(tag);
         } else if (getApplicationContext().getResources().getString(R.string.delete).equals(item.getTitle())) {
             presenter.onDeleteTagSelected(currentTagId);
         }
