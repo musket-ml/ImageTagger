@@ -24,6 +24,7 @@ public class ImageTaggerPresenter extends BasePresenter<TaggedImage, ImageTagger
 
     @Override
     protected void updateView() {
+        new LoadTagsTask().execute();
         log.log("updateView() executed.");
     }
 
@@ -153,6 +154,21 @@ public class ImageTaggerPresenter extends BasePresenter<TaggedImage, ImageTagger
         protected void onPostExecute(Tag tag) {
             super.onPostExecute(tag);
             view().removeTag(tag);
+            log.log("DeleteTag onPostExecute");
+        }
+    }
+
+    private class UpdateTag extends AsyncTask<Tag, Void, Tag> {
+        @Override
+        protected Tag doInBackground(Tag... tags) {
+            ImageTaggerApp.getInstance().getDatabase().tagDao().update(tags[0]);
+            return tags[0];
+        }
+
+        @Override
+        protected void onPostExecute(Tag tag) {
+            super.onPostExecute(tag);
+            view().updateTag(tag);
             log.log("DeleteTag onPostExecute");
         }
     }
