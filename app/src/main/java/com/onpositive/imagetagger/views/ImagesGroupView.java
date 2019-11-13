@@ -8,4 +8,6 @@ public interface ImagesGroupView {
     void showTaggedImages(List<TaggedImage> taggedImages);
 
     void makeTaggedImage();
+
+    void startTaggedImageEditor(TaggedImage taggedImage);
 }

@@ -103,7 +103,6 @@ public class ImagesGroupFragment extends Fragment implements ImagesGroupView {
     @Override
     public void onResume() {
         super.onResume();
-        presenter.bindView(this);
     }
 
     @Override
@@ -284,9 +283,34 @@ public class ImagesGroupFragment extends Fragment implements ImagesGroupView {
     }
 
     @Override
+    public void startTaggedImageEditor(TaggedImage taggedImage) {
+        log.log("startTaggedImageEditor(startTaggedImageEditor) Starting ImageTaggerActivity.class");
+        Intent intent = new Intent(this.getContext(), ImageTaggerActivity.class);
+        intent.putExtra(ARG_CURRENT_PHOTO_PATH, taggedImage.getImage().getImagePath());
+        startActivity(intent);
+    }
+
+    @Override
     public void makeTaggedImage() {
         log.log("Photo button pressed");
         requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 PHOTO_PERMISSION_REQUEST_CODE);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        String currentImageId = item.getIntent().getStringExtra(TaggedImageVH.IMAGE_PATH);
+        int adapterPosition = item.getIntent().getIntExtra(TaggedImageVH.ADAPTER_POSITION, -1);
+        if (currentImageId == "" || adapterPosition < 0) {
+            return super.onContextItemSelected(item);
+        }
+        if (this.getContext().getResources().getString(R.string.edit).equals(item.getTitle())) {
+            TaggedImage taggedImage = taggedImagesRVAdapter.getItem(adapterPosition);
+            presenter.onEditImageSelected(taggedImage);
+        } else if (getContext().getResources().getString(R.string.delete).equals(item.getTitle())) {
+//            presenter.onDeleteImageSelected(currentimageId); TODO uncomment this line
+        }
+
+        return super.onContextItemSelected(item);
     }
 }

@@ -25,6 +25,10 @@ public class ImagesGroupPresenter extends BasePresenter<List<ImageTag>, ImagesGr
         view().makeTaggedImage();
     }
 
+    public void onEditImageSelected(TaggedImage taggedImage) {
+        view().startTaggedImageEditor(taggedImage);
+    }
+
     private class LoadTaggedImages extends AsyncTask<Void, Void, List<TaggedImage>> {
 
         @Override
