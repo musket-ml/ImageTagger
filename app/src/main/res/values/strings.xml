@@ -11,4 +11,5 @@
     <string name="apply">Apply</string>
     <string name="tag_colon">Tag:</string>
     <string name="image_colon">Image:</string>
+    <string name="save_and_send">Save to ZIP and send e-mail</string>
 </resources>
