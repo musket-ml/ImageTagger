@@ -10,4 +10,5 @@
     <string name="edit">Edit</string>
     <string name="apply">Apply</string>
     <string name="tag_colon">Tag:</string>
+    <string name="image_colon">Image:</string>
 </resources>
