@@ -1,6 +1,8 @@
 package com.onpositive.imagetagger;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.view.ContextMenu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,9 +21,12 @@ import java.text.SimpleDateFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnLongClick;
 
-class TaggedImageVH extends MvpViewHolder<TaggedImagePresenter> implements TaggedImageView {
+class TaggedImageVH extends MvpViewHolder<TaggedImagePresenter> implements TaggedImageView, View.OnCreateContextMenuListener {
 
+    public static final String IMAGE_PATH = "image_path";
+    public static final String ADAPTER_POSITION = "adapter_position";
     private static Logger log = new Logger(TaggedImageVH.class);
     @BindView(R.id.image_previewIV)
     ImageView imagePreviewIV;
@@ -33,6 +38,12 @@ class TaggedImageVH extends MvpViewHolder<TaggedImagePresenter> implements Tagge
     public TaggedImageVH(@NonNull View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        itemView.setOnCreateContextMenuListener(this);
+    }
+
+    @Override
+    public void showContextMenu() {
+        this.itemView.showContextMenu();
     }
 
     @Override
@@ -56,5 +67,25 @@ class TaggedImageVH extends MvpViewHolder<TaggedImagePresenter> implements Tagge
         lastModifiedTV.setText(date);
         tagsTV.setText(tagsStringBuilder.toString());
         log.log("Loaded view for tagged image card: " + taggedImage.getImage().getImagePath());
+    }
+
+    @OnLongClick
+    public boolean onLongClick() {
+        presenter.onLongClick();
+        log.log("OnLongClick, position: " + getAdapterPosition());
+        return true;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+        String label = presenter.onCreateContextMenuTitle();
+        String imagePath = presenter.onCreateContextMenuImageId();
+        int position = getAdapterPosition();
+        Intent intent = new Intent();
+        intent.putExtra(IMAGE_PATH, imagePath);
+        intent.putExtra(ADAPTER_POSITION, position);
+        contextMenu.setHeaderTitle(this.itemView.getContext().getResources().getString(R.string.image_colon) + " " + label);
+        contextMenu.add(0, view.getId(), 0, this.itemView.getContext().getResources().getString(R.string.edit)).setIntent(intent);
+        contextMenu.add(0, view.getId(), 0, this.itemView.getContext().getResources().getString(R.string.delete)).setIntent(intent);
     }
 }
