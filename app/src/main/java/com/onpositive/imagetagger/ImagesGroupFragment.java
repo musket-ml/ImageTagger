@@ -119,23 +119,22 @@ public class ImagesGroupFragment extends Fragment implements ImagesGroupView {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.model_fragment_menu, menu); TODO fix onCreateOptionsMenu
+        inflater.inflate(R.menu.images_group_fragment_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
         log.log("onCreateOptionsMenu executed");
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()) {
-//            case R.id.remove_current_tab:
-//                log.log("onOptionsItemSelected. showRemoveModelDialog");
-//                showRemoveModelDialog();
-//                return true;
-//            default:
-//                log.log("onOptionsItemSelected super.onOptionsItemSelected");
-//                return super.onOptionsItemSelected(item);
-//        }
-        return false; //TODO fix onOptionsItemSelected
+        switch (item.getItemId()) {
+            case R.id.save_and_send:
+                log.log("onOptionsItemSelected. save_and_send");
+                presenter.onSendImagesToEmail();
+                return true;
+            default:
+                log.log("onOptionsItemSelected super.onOptionsItemSelected");
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
