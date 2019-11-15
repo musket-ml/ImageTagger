@@ -15,21 +15,22 @@ public class Logger {
 
     public Logger() {
         logTag = getCallerClass();
+        isLogging = BuildConfig.IS_LOGS_ENABLE;
     }
 
     public void log(String message) {
         if (isLogging)
-            Log.d(logTag, getCallerName() + ": " + message);
+            Log.d(logTag, getCallerName() + " " + getCallPlace() + " : " + message);
     }
 
     public void error(String message) {
         if (isLogging)
-            Log.e(logTag, getCallerName() + ": " + message);
+            Log.e(logTag, getCallerName() + " " + getCallPlace() + " : " + message);
     }
 
     public void info(String message) {
         if (isLogging)
-            Log.i(logTag, getCallerName() + ": " + message);
+            Log.i(logTag, getCallerName() + " " + getCallPlace() + " : " + message);
     }
 
     private String getCallerName() {
@@ -43,5 +44,12 @@ public class Logger {
         StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
         StackTraceElement e = stacktrace[4];
         return e.getClassName();
+    }
+
+    private String getCallPlace() {
+        StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
+        StackTraceElement e = stacktrace[4];
+        String callPlace = "(" + e.getFileName() + ":" + e.getLineNumber() + ")";
+        return callPlace;
     }
 }
