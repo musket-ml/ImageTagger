@@ -20,6 +20,9 @@ public interface ImageTagDao {
             "image_tag_join.imagePath = :imagePath")
     List<Tag> getTagsForImage(final String imagePath);
 
+    @Query("SELECT * FROM IMAGE_TAG_JOIN")
+    List<ImageTag> getAll();
+
     @Insert
     void insert(ImageTag imageTag);
 
