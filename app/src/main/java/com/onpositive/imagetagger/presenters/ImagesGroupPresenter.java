@@ -50,6 +50,17 @@ public class ImagesGroupPresenter extends BasePresenter<List<ImageTag>, ImagesGr
         view().startTaggedImageEditor(taggedImage);
     }
 
+    public void onSendImagesToEmail() {
+        new ZipExtractor().execute();
+    }
+
+    public void saveZip(Uri uri) {
+        if (null == currentZip) {
+            return;
+        }
+        view().writeFileContent(uri, currentZip);
+    }
+
     private class LoadTaggedImages extends AsyncTask<Void, Void, List<TaggedImage>> {
 
         @Override

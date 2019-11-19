@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,7 +32,10 @@ import com.onpositive.imagetagger.tools.Utils;
 import com.onpositive.imagetagger.views.ImagesGroupView;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.util.List;
 
 import butterknife.BindView;
@@ -45,6 +50,7 @@ public class ImagesGroupFragment extends Fragment implements ImagesGroupView {
     public static final String ARG_CURRENT_PHOTO_PATH = "current_photo_path";
     public static final int REQUEST_IMAGE_CAPTURE = 1;
     public static final int PHOTO_PERMISSION_REQUEST_CODE = 2;
+    private static final int WRITE_REQUEST_CODE = 3;
 
     private static Logger log = new Logger(ImagesGroupFragment.class);
     @BindView(R.id.makeImageFAB)
@@ -102,6 +108,7 @@ public class ImagesGroupFragment extends Fragment implements ImagesGroupView {
 
     @Override
     public void onResume() {
+        presenter.bindView(this);
         super.onResume();
     }
 
@@ -140,6 +147,7 @@ public class ImagesGroupFragment extends Fragment implements ImagesGroupView {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        presenter.bindView(this);
         log.log("onActivityResult. Request code: " + requestCode + ", resultCode: " + resultCode);
         if (resultCode != RESULT_OK) {
             log.log("onActivityResult image tagging canceled or failed");
@@ -151,6 +159,10 @@ public class ImagesGroupFragment extends Fragment implements ImagesGroupView {
                 Intent intent = new Intent(this.getContext(), ImageTaggerActivity.class);
                 intent.putExtra(ARG_CURRENT_PHOTO_PATH, currentPhotoPath);
                 startActivity(intent);
+                break;
+            case WRITE_REQUEST_CODE:
+                presenter.saveZip(data.getData());
+                log.log("Zip saved to the selected place");
                 break;
         }
 //        ImageClassifier classifier = null;
@@ -311,5 +323,51 @@ public class ImagesGroupFragment extends Fragment implements ImagesGroupView {
         }
 
         return super.onContextItemSelected(item);
+    }
+
+    @Override
+    public File createTempFile(String fileName) {
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
+
+        return new File(storageDir, fileName);
+    }
+
+    @Override
+    public void exportFile(File file) {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        intent.setType("application/zip");
+        intent.putExtra(Intent.EXTRA_TITLE, file.getName());
+        startActivityForResult(intent, WRITE_REQUEST_CODE);
+    }
+
+    @Override
+    public void writeFileContent(Uri uri, File contentFile) {
+        try {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        ParcelFileDescriptor pfd = getActivity().getContentResolver().openFileDescriptor(uri, "w");
+                        FileOutputStream fileOutputStream = new FileOutputStream(pfd.getFileDescriptor());
+                        FileChannel src = new FileInputStream(contentFile).getChannel();
+                        FileChannel dest = fileOutputStream.getChannel();
+                        dest.transferFrom(src, 0, src.size());
+                        src.close();
+                        dest.close();
+                        fileOutputStream.close();
+                        pfd.close();
+                        contentFile.delete();
+                        log.log("ZIP file has been extracted. Temporary ZIP deleted.");
+                    } catch (Exception e) {
+                        log.log(e.getMessage());
+                    }
+                }
+            }).start();
+        } catch (Exception e) {
+            log.log(e.getMessage());
+        }
     }
 }
