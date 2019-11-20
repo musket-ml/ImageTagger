@@ -147,6 +147,12 @@ public class ImageTaggerPresenter extends BasePresenter<TaggedImage, ImageTagger
             }
             return null;
         }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            view().onBackPressed();
+        }
     }
 
     private class DeleteTag extends AsyncTask<Integer, Void, Tag> {
