@@ -1,5 +1,7 @@
 package com.onpositive.imagetagger.models;
 
+import androidx.annotation.Nullable;
+
 import java.util.List;
 
 public class TaggedImage implements Comparable<TaggedImage> {
@@ -38,5 +40,28 @@ public class TaggedImage implements Comparable<TaggedImage> {
 
     public void setChecked(boolean checked) {
         isChecked = checked;
+    }
+
+
+    @Override
+    public int hashCode() {
+        final int prime = 32;
+        int result = 1;
+        result = prime * result + image.getImagePath().hashCode();
+        return result;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        TaggedImage otherImageTag = (TaggedImage) obj;
+        if (getImage().getImagePath() != otherImageTag.getImage().getImagePath())
+            return false;
+        return true;
     }
 }
