@@ -57,7 +57,7 @@ class TaggedImageVH extends MvpViewHolder<TaggedImagePresenter> implements Tagge
             }
         }
         try {
-            Bitmap thumbnailImage = Utils.decodeSampledBitmapFromFile(taggedImage.getImage().getImagePath(), 320, 320);
+            Bitmap thumbnailImage = Utils.decodeSampledBitmapFromFile(taggedImage.getImage().getThumbnailPath(), 320, 320);
             imagePreviewIV.setImageBitmap(thumbnailImage);
         } catch (Error err) {
             log.log("Error. Failed card preview loading" + err.getMessage());
