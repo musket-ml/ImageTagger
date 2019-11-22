@@ -151,7 +151,7 @@ public class ImageTaggerPresenter extends BasePresenter<TaggedImage, ImageTagger
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            view().onBackPressed();
+            view().showTaggedImages();
         }
     }
 

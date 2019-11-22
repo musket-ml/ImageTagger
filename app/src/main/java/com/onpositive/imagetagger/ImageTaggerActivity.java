@@ -62,7 +62,6 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
             case R.id.save_close_btn:
                 log.log("Close button clicked");
                 presenter.onSaveButtonClicked();
-                onBackPressed();
                 break;
             case R.id.makeTagFAB:
                 log.log("Make tag button clicked");
@@ -182,6 +181,12 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
         AlertDialog dialog = builder.create();
         dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         dialog.show();
+    }
+
+    @Override
+    public void showTaggedImages() {
+        Intent intent = new Intent(this.getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 
     public File createImageFile() {

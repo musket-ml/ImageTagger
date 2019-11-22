@@ -24,5 +24,5 @@ public interface ImageTaggerView {
 
     void showEditDialogForTag(Tag tag);
 
-    void onBackPressed();
+    void showTaggedImages();
 }
