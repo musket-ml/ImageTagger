@@ -50,6 +50,10 @@ public class ImagesGroupPresenter extends BasePresenter<List<ImageTag>, ImagesGr
         view().startTaggedImageEditor(taggedImage);
     }
 
+    public void onDeleteImageSelected(String imagePath) {
+        new ImageRemover().execute(imagePath);
+    }
+
     public void onSendImagesToEmail() {
         new ZipExtractor().execute();
     }
@@ -61,19 +65,19 @@ public class ImagesGroupPresenter extends BasePresenter<List<ImageTag>, ImagesGr
         view().writeFileContent(uri, currentZip);
     }
 
-    private class ImageRemover extends AsyncTask<String, Void, List<TaggedImage>>{
+    private class ImageRemover extends AsyncTask<String, Void, List<TaggedImage>> {
 
         @Override
         protected List<TaggedImage> doInBackground(String... strings) {
             List<TaggedImage> taggedImageList = new ArrayList<>();
-            for (String imagePath : strings){
+            for (String imagePath : strings) {
                 ImageTaggerApp.getInstance().getDatabase().imageTagDao().deleteTagsForImage(imagePath);
                 Image image = ImageTaggerApp.getInstance().getDatabase().imageDao().getByPath(imagePath);
                 ImageTaggerApp.getInstance().getDatabase().imageDao().delete(image);
                 try {
                     new File(imagePath).delete();
                     new File(image.getThumbnailPath()).delete();
-                } catch (Exception e){
+                } catch (Exception e) {
                     log.error("Failed image deletion. " + e.getMessage());
                 }
 

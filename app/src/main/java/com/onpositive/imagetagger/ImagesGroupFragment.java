@@ -148,9 +148,9 @@ public class ImagesGroupFragment extends Fragment implements ImagesGroupView {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         presenter.bindView(this);
-        log.log("onActivityResult. Request code: " + requestCode + ", resultCode: " + resultCode);
+        log.log("Request code: " + requestCode + ", resultCode: " + resultCode);
         if (resultCode != RESULT_OK) {
-            log.log("onActivityResult image tagging canceled or failed");
+            log.log("Image tagging canceled or failed");
             return;
         }
         switch (requestCode) {
@@ -165,36 +165,6 @@ public class ImagesGroupFragment extends Fragment implements ImagesGroupView {
                 log.log("Zip saved to the selected place");
                 break;
         }
-//        ImageClassifier classifier = null;
-//        try {
-//            classifier = new ImageClassifier(this.getActivity(), tfLiteItem);
-//        } catch (IOException e) {
-//            log.log("ImageClassifier creation failed: " + e.getMessage());
-//        }
-//        if (null != classifier) {
-//            log.log("ImageClassifier created. ");
-//            cat = new ClassificationAsyncTask(classifier, this);
-//        } else
-//            log.log("Classification failed. ImageClassifier object is null.");
-//        if (resultCode != RESULT_OK) {
-//            log.log("onActivityResult failed");
-//            return;
-//        }
-//        switch (requestCode) {
-//            case REQUEST_IMAGE_CAPTURE:
-//                log.log(" got result from camera. currentPhotoPath: " + currentPhotoPath);
-//                try {
-//                    if (null != cat) {
-//                        cat.execute(ContentType.IMAGE);
-//                        log.log("Classification Async Task execution started");
-//                    } else
-//                        log.log("Classification failed. ClassificationAsyncTask object is null.");
-//                } catch (Exception e) {
-//                    log.log("Photo classification failed: " + e.getMessage());
-//                }
-//                break;
-//        }
-        //TODO fix onActivityResult
     }
 
     @Override
@@ -319,7 +289,7 @@ public class ImagesGroupFragment extends Fragment implements ImagesGroupView {
             TaggedImage taggedImage = taggedImagesRVAdapter.getItem(adapterPosition);
             presenter.onEditImageSelected(taggedImage);
         } else if (getContext().getResources().getString(R.string.delete).equals(item.getTitle())) {
-//            presenter.onDeleteImageSelected(currentimageId); TODO uncomment this line
+            presenter.onDeleteImageSelected(currentImageId);
         }
 
         return super.onContextItemSelected(item);
@@ -368,6 +338,13 @@ public class ImagesGroupFragment extends Fragment implements ImagesGroupView {
             }).start();
         } catch (Exception e) {
             log.log(e.getMessage());
+        }
+    }
+
+    @Override
+    public void removeTaggedImages(List<TaggedImage> removedTaggedImages) {
+        for (TaggedImage taggedImage : removedTaggedImages) {
+            taggedImagesRVAdapter.removeItem(taggedImage);
         }
     }
 }

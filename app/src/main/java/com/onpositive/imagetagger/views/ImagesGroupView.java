@@ -19,4 +19,6 @@ public interface ImagesGroupView {
     void exportFile(File file);
 
     void writeFileContent(Uri uri, File contentFile);
+
+    void removeTaggedImages(List<TaggedImage> removedTaggedImages);
 }
