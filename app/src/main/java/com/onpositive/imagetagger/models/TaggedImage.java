@@ -60,7 +60,7 @@ public class TaggedImage implements Comparable<TaggedImage> {
         if (getClass() != obj.getClass())
             return false;
         TaggedImage otherImageTag = (TaggedImage) obj;
-        if (getImage().getImagePath() != otherImageTag.getImage().getImagePath())
+        if (!getImage().getImagePath().equals(otherImageTag.getImage().getImagePath()))
             return false;
         return true;
     }
