@@ -27,6 +27,7 @@ import com.onpositive.imagetagger.views.ImageTaggerView;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -100,7 +101,7 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
     @Override
     protected void onPause() {
         super.onPause();
-
+        presenter.onPause();
         presenter.unbindView();
     }
 
@@ -135,7 +136,7 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
             tagsRVAdapter.setTagsSelection(imageTagList);
             log.log("Image Tags are selected. Count: " + imageTagList.size());
         } catch (Exception e) {
-            log.log("Failed tagsRV show selected tags: " + e.getMessage());
+            log.error("Failed tagsRV show selected tags: " + e.getMessage());
         }
     }
 

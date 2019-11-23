@@ -18,6 +18,7 @@ public class TagPresenter extends BasePresenter<Tag, TagView> {
     @Override
     protected void updateView() {
         view().setTagLabel(model.getTagLabel());
+        view().setSelection(model.isChecked());
     }
 
     public void onLongClick() {

@@ -21,10 +21,11 @@ import java.util.List;
 
 public class ImageTaggerPresenter extends BasePresenter<TaggedImage, ImageTaggerView> {
     private static Logger log = new Logger(ImageTaggerPresenter.class);
+    private List<Tag> currentSelectedTags;
 
     @Override
     protected void updateView() {
-        new LoadTagsTask().execute();
+        view().showTagsSelection(currentSelectedTags);
         log.log("updateView() executed.");
     }
 
@@ -82,6 +83,10 @@ public class ImageTaggerPresenter extends BasePresenter<TaggedImage, ImageTagger
         new UpdateTag().execute(tag);
     }
 
+    public void onPause() {
+        this.currentSelectedTags = view().getSelectedTags();
+    }
+
     private class LoadTagsTask extends AsyncTask<Void, Void, List<Tag>> {
 
         @Override
@@ -92,7 +97,9 @@ public class ImageTaggerPresenter extends BasePresenter<TaggedImage, ImageTagger
         @Override
         protected void onPostExecute(List<Tag> tags) {
             super.onPostExecute(tags);
+            List<Tag> selectedTags = view().getSelectedTags();
             view().showTags(tags);
+            view().showTagsSelection(selectedTags);
             log.log("LoadTagsTask onPostExecute. Load all tags done. Tags count: " + tags.size());
         }
     }

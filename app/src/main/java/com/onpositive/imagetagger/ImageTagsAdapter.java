@@ -52,9 +52,8 @@ public class ImageTagsAdapter extends MvpRecyclerListAdapter<Tag, TagPresenter, 
     }
 
     public void setTagsSelection(List<Tag> imageTagList) {
-        for (Tag tag: imageTagList) {
+        for (Tag tag : imageTagList) {
             this.updateItem(tag);
-            presenters.get(tag.getTagId()).setSelection();
         }
     }
 }
