@@ -97,6 +97,34 @@ public class ImageTaggerPresenter extends BasePresenter<TaggedImage, ImageTagger
         }
     }
 
+    private class LoadModelTask extends AsyncTask<String, Void, TaggedImage> {
+
+        @Override
+        protected TaggedImage doInBackground(String... paths) {
+            Image image = ImageTaggerApp.getInstance().getDatabase().imageDao().getByPath(paths[0]);
+            if (null == image) {
+                image = new Image();
+                image.setImagePath(paths[0]);
+            }
+            List<Tag> taggedImageList = ImageTaggerApp.getInstance().getDatabase().imageTagDao().getTagsForImage(paths[0]);
+            for (Tag tag : taggedImageList) {
+                tag.setChecked(true);
+            }
+            TaggedImage taggedImage = new TaggedImage();
+            taggedImage.setImage(image);
+            taggedImage.setImageTagList(taggedImageList);
+            return taggedImage;
+        }
+
+        @Override
+        protected void onPostExecute(TaggedImage taggedImage) {
+            super.onPostExecute(taggedImage);
+            setModel(taggedImage);
+            view().showTagsSelection(taggedImage.getImageTagList());
+            log.log("LoadModelTask onPostExecute. Loaded model for: " + model.getImage().getImagePath() + ". Image tags count: " + model.getImageTagList().size());
+        }
+    }
+
     private class CreateTagsTask extends AsyncTask<String, Void, Void> {
 
         @Override
