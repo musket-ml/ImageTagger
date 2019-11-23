@@ -141,6 +141,8 @@ public class ImageTaggerActivity extends AppCompatActivity implements ImageTagge
 
     @Override
     public List<Tag> getSelectedTags() {
+        if (tagsRVAdapter == null)
+            return new ArrayList<Tag>();
         return tagsRVAdapter.getSelectedItems();
     }
 
