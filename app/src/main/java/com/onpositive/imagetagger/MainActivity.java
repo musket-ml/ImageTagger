@@ -1,41 +1,34 @@
 package com.onpositive.imagetagger;
 
+
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.onpositive.imagetagger.presenters.MainPresenter;
-
-import butterknife.ButterKnife;
+import com.onpositive.imagetagger.tools.Logger;
 
 public class MainActivity extends AppCompatActivity {
 
-    private MainPresenter presenter;
+    private Logger log = new Logger();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
-
-        if (savedInstanceState == null) {
-            presenter = new MainPresenter();
-        } else {
-            presenter = PresenterManager.getInstance().restorePresenter(savedInstanceState);
-        }
-
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        ImagesGroupFragment fragment = new ImagesGroupFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.container, fragment);
+        fragmentTransaction.commit();
+        log.log("onCreate executed. Tabs load complete.");
+    }
 
-        FloatingActionButton makeImageFAB = findViewById(R.id.makeImageFAB);
-        makeImageFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                presenter.onMakeImageClicked();
-            }
-        });
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        log.log("onActivityResult");
     }
 }

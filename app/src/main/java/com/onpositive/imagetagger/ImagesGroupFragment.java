@@ -25,7 +25,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.onpositive.imagetagger.models.TaggedImage;
-import com.onpositive.imagetagger.models.TaggedImagesGroup;
 import com.onpositive.imagetagger.presenters.ImagesGroupPresenter;
 import com.onpositive.imagetagger.tools.Logger;
 import com.onpositive.imagetagger.tools.Utils;
@@ -59,18 +58,7 @@ public class ImagesGroupFragment extends Fragment implements ImagesGroupView {
     RecyclerView taggedImagesRV;
     private String currentPhotoPath;
     private ImagesGroupPresenter presenter;
-    private TaggedImagesGroup taggedImagesGroup;
     private TaggedImagesAdapter taggedImagesRVAdapter;
-
-    public static ImagesGroupFragment newInstance(TaggedImagesGroup taggedImagesGroup, int sectionNumber) {
-        ImagesGroupFragment fragment = new ImagesGroupFragment();
-        fragment.taggedImagesGroup = taggedImagesGroup;
-        Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        fragment.setArguments(args);
-        log.log("Created fragment on position: " + sectionNumber);
-        return fragment;
-    }
 
     @OnClick({R.id.makeImageFAB})
     public void onClick(View view) {
@@ -202,54 +190,6 @@ public class ImagesGroupFragment extends Fragment implements ImagesGroupView {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
-
-//    private void showRemoveModelDialog() {
-//        new AlertDialog.Builder(this.getActivity())
-//                .setTitle(getResources().getString(R.string.remove_alert_title))
-//                .setMessage(
-//                        getResources().getString(R.string.remove_alert_message))
-//                .setPositiveButton(
-//                        getResources().getString(R.string.yes),
-//                        new DialogInterface.OnClickListener() {
-//
-//                            @Override
-//                            public void onClick(DialogInterface dialog,
-//                                                int which) {
-//                                removeImagesGroup(tfLiteItem);
-//                            }
-//                        })
-//                .setNegativeButton(
-//                        getResources().getString(R.string.cancel),
-//                        new DialogInterface.OnClickListener() {
-//
-//                            @Override
-//                            public void onClick(DialogInterface dialog,
-//                                                int which) {
-//                            }
-//                        }).show();
-//        log.log("RemoveModelDialog is active");
-//    }
-
-//    private void removeImagesGroup(TFLiteItem tfLiteItem) {
-//        List<ResultItem> segmentItemList = MLDemoApp.getInstance().getDatabase().resultItemDao()
-//                .getAllByParentTF(tfLiteItem.getTfFilePath());
-//        for (ResultItem resultItem : segmentItemList) {
-//            File resultItemFile = new File(resultItem.getFilePath());
-//            if (resultItemFile.exists())
-//                resultItemFile.delete();
-//            MLDemoApp.getInstance().getDatabase().resultItemDao().delete(resultItem);
-//        }
-//
-//        File modelFile = new File(tfLiteItem.getTfFilePath());
-//        if (modelFile.exists())
-//            modelFile.delete();
-//        MLDemoApp.getInstance().getDatabase().tfLiteItemDao().delete(tfLiteItem);
-//
-//        ((MainActivity) getActivity()).getSectionsPagerAdapter().refreshDataSet();
-//        ((MainActivity) getActivity()).getSectionsPagerAdapter().notifyDataSetChanged();
-//      TODO fix groupRemove
-//        log.log("TFLite Model deleted with its files");
-//    }
 
     @Override
     public void showTaggedImages(List<TaggedImage> taggedImages) {
