@@ -228,10 +228,11 @@ public class ImagesGroupFragment extends Fragment implements ImagesGroupView {
         if (this.getContext().getResources().getString(R.string.edit).equals(item.getTitle())) {
             TaggedImage taggedImage = taggedImagesRVAdapter.getItem(adapterPosition);
             presenter.onEditImageSelected(taggedImage);
+            return true;
         } else if (getContext().getResources().getString(R.string.delete).equals(item.getTitle())) {
             presenter.onDeleteImageSelected(currentImageId);
+            return true;
         }
-
         return super.onContextItemSelected(item);
     }
 
