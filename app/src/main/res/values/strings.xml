@@ -12,4 +12,5 @@
     <string name="tag_colon">Tag:</string>
     <string name="image_colon">Image:</string>
     <string name="save_and_send">Export to ZIP</string>
+    <string name="select_tag">Select tags for image:</string>
 </resources>
