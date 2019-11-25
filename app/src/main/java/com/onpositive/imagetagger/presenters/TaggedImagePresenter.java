@@ -12,7 +12,7 @@ public class TaggedImagePresenter extends BasePresenter<TaggedImage, TaggedImage
         view().showCard(model);
     }
 
-    public void onLongClick() {
+    public void onClick() {
         view().showContextMenu();
     }
 

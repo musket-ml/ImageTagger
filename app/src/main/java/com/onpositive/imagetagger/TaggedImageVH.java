@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnLongClick;
+import butterknife.OnClick;
 
 class TaggedImageVH extends MvpViewHolder<TaggedImagePresenter> implements TaggedImageView, View.OnCreateContextMenuListener {
 
@@ -69,11 +69,10 @@ class TaggedImageVH extends MvpViewHolder<TaggedImagePresenter> implements Tagge
         log.log("Loaded view for tagged image card: " + taggedImage.getImage().getImagePath());
     }
 
-    @OnLongClick
-    public boolean onLongClick() {
-        presenter.onLongClick();
+    @OnClick({R.id.card_view})
+    public void onClick(View view) {
+        presenter.onClick();
         log.log("OnLongClick, position: " + getAdapterPosition());
-        return true;
     }
 
     @Override
