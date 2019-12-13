@@ -114,7 +114,8 @@ public class ImagesGroupPresenter extends BasePresenter<List<ImageTag>, ImagesGr
         @Override
         protected void onPostExecute(List<TaggedImage> taggedImages) {
             super.onPostExecute(taggedImages);
-            view().showTaggedImages(taggedImages);
+            if (null != view())
+                view().showTaggedImages(taggedImages);
         }
     }
 

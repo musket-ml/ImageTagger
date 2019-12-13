@@ -60,6 +60,10 @@ public class ImagesGroupFragment extends Fragment implements ImagesGroupView {
     private ImagesGroupPresenter presenter;
     private TaggedImagesAdapter taggedImagesRVAdapter;
 
+    public ImagesGroupFragment(){
+        setRetainInstance(true);
+    }
+
     @OnClick({R.id.makeImageFAB})
     public void onClick(View view) {
         switch (view.getId()) {
