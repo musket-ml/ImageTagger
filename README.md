@@ -1,6 +1,8 @@
 # ImageTagger
 Android application for creating an image dataset.
 
+![](/media/image-tagger_small.gif)
+
 ## Usage
 
 ### Create tagged image.  
@@ -15,6 +17,8 @@ Android application for creating an image dataset.
 
 5) Choose a tag and press `Done`
 
+![](/media/image-tagger_create_small.gif)
+
 ### Edit tagged image
 
 1) Open app. You must have tagged images.
@@ -23,11 +27,15 @@ Android application for creating an image dataset.
 
 3) Create new tag or change tag selection and press `Done`
 
+![](/media/image-tagger_image_edit_small.gif)
+
 ### Delete tagged image
 
 1) Open app. You must have tagged images.
 
 2) Click on an item. Select action `Delete`.
+
+![](/media/image-tagger_delete_small.gif)
 
 ### Edit tag
 
@@ -62,3 +70,5 @@ Android application for creating an image dataset.
 2) Select the `Export to ZIP`action.
 
 3) Choose a location to save the archive file and click on the save button. 
+
+![](/media/image-tagger_export_small.gif)
