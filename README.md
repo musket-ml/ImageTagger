@@ -3,6 +3,10 @@ Android application for creating an image dataset.
 
 ![](/media/image-tagger_small.gif)
 
+## Installation
+
+Download and install [ImageTagger apk file](https://github.com/VasiliyLysokobylko/ImageTagger/raw/master/apk/release/image_tagger_release_1.0.apk) on your android device.
+
 ## Usage
 
 ### Create tagged image.  
