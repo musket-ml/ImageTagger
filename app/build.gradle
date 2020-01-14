@@ -1,4 +1,10 @@
+import java.nio.file.Paths
+
 apply plugin: 'com.android.application'
+
+def keystorePropertiesFile = Paths.get(System.properties['user.home'],"keystores","onpositive_keystore.properties").toFile()
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
     compileSdkVersion 28
@@ -10,11 +16,27 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        release {
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
+            signingConfig signingConfigs.release
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "boolean", "IS_LOGS_ENABLE", "false"
+            applicationVariants.all { variant ->
+                variant.outputs.all {
+                    def flavor = variant.name
+                    def versionName = variant.versionName
+                    outputFileName = "image_tagger_${flavor}_${versionName}.apk"
+                }
+            }
         }
         debug {
             buildConfigField "boolean", "IS_LOGS_ENABLE", "true"
