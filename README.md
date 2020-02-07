@@ -5,7 +5,7 @@ Android application for creating an image dataset.
 
 ## Installation
 
-Download and install [ImageTagger apk file](https://github.com/VasiliyLysokobylko/ImageTagger/raw/master/apk/release/image_tagger_release_1.0.apk) on your android device.
+Download and install [ImageTagger apk file](https://github.com/musket-ml/ImageTagger/raw/master/apk/release/image_tagger_release_1.0.apk) on your android device.
 
 ## Usage
 
